@@ -30,6 +30,18 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+//Put Routes
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.send(await user.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 //Deletes a single user based off of ID
 router.delete('/:id', async (req, res, next) => {
   try {
