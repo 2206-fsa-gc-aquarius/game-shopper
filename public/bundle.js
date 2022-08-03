@@ -2366,6 +2366,78 @@ const history =  false ? 0 : (0,history__WEBPACK_IMPORTED_MODULE_0__.createBrows
 
 /***/ }),
 
+/***/ "./client/store/AdminUsersList.js":
+/*!****************************************!*\
+  !*** ./client/store/AdminUsersList.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addUser": () => (/* binding */ addUser),
+/* harmony export */   "default": () => (/* binding */ userListReducer),
+/* harmony export */   "deleteUser": () => (/* binding */ deleteUser),
+/* harmony export */   "fetchUser": () => (/* binding */ fetchUser),
+/* harmony export */   "setUser": () => (/* binding */ setUser),
+/* harmony export */   "toAddUser": () => (/* binding */ toAddUser),
+/* harmony export */   "toDeleteUser": () => (/* binding */ toDeleteUser)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+ //Action types
+
+const SET_USERS = 'SET_USERS';
+const ADD_USER = 'ADD_USER';
+const DELETE_USER = 'DELETE_USER'; //Action creators
+
+const setUser = users => ({
+  type: SET_USERS,
+  users
+});
+const addUser = user => ({
+  type: ADD_USER,
+  user
+});
+const deleteUser = id => ({
+  type: DELETE_USER,
+  id
+}); // Thunk creators
+
+const fetchUser = () => async dispatch => {
+  const {
+    data
+  } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/users');
+  dispatch(setUser(data));
+};
+const toAddUser = (userList, history) => async dispatch => {
+  await axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/users', userList);
+  dispatch(addUser(userList));
+  history.push('/users');
+};
+const toDeleteUser = (id, history) => async dispatch => {
+  await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/users/${id}`).then(() => dispatch(deleteUser(id)));
+  history.push('/users');
+}; //Reducer
+
+function userListReducer(state = [], action) {
+  switch (action.type) {
+    case SET_USERS:
+      return action.users;
+
+    case ADD_USER:
+      return [...state, action.user];
+
+    case DELETE_USER:
+      return [...state].filter(userState => userState.id !== action.id);
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
 /***/ "./client/store/auth.js":
 /*!******************************!*\
   !*** ./client/store/auth.js ***!
@@ -2468,26 +2540,136 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "logout": () => (/* reexport safe */ _auth__WEBPACK_IMPORTED_MODULE_2__.logout),
 /* harmony export */   "me": () => (/* reexport safe */ _auth__WEBPACK_IMPORTED_MODULE_2__.me)
 /* harmony export */ });
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 /* harmony import */ var redux_devtools_extension__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-devtools-extension */ "./node_modules/redux-devtools-extension/index.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./client/store/auth.js");
+/* harmony import */ var _singleProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./singleProduct */ "./client/store/singleProduct.js");
+/* harmony import */ var _singleUser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./singleUser */ "./client/store/singleUser.js");
+/* harmony import */ var _AdminUsersList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AdminUsersList */ "./client/store/AdminUsersList.js");
 
 
 
 
 
-const reducer = (0,redux__WEBPACK_IMPORTED_MODULE_3__.combineReducers)({
-  auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"]
+
+
+
+const reducer = (0,redux__WEBPACK_IMPORTED_MODULE_6__.combineReducers)({
+  auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
+  singleProductReducer: _singleProduct__WEBPACK_IMPORTED_MODULE_3__["default"],
+  singleUserReducer: _singleUser__WEBPACK_IMPORTED_MODULE_4__["default"],
+  userListReducer: _AdminUsersList__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
-const middleware = (0,redux_devtools_extension__WEBPACK_IMPORTED_MODULE_1__.composeWithDevTools)((0,redux__WEBPACK_IMPORTED_MODULE_3__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_4__["default"], (0,redux_logger__WEBPACK_IMPORTED_MODULE_0__.createLogger)({
+const middleware = (0,redux_devtools_extension__WEBPACK_IMPORTED_MODULE_1__.composeWithDevTools)((0,redux__WEBPACK_IMPORTED_MODULE_6__.applyMiddleware)(redux_thunk__WEBPACK_IMPORTED_MODULE_7__["default"], (0,redux_logger__WEBPACK_IMPORTED_MODULE_0__.createLogger)({
   collapsed: true
 })));
-const store = (0,redux__WEBPACK_IMPORTED_MODULE_3__.createStore)(reducer, middleware);
+const store = (0,redux__WEBPACK_IMPORTED_MODULE_6__.createStore)(reducer, middleware);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
 
+
+/***/ }),
+
+/***/ "./client/store/singleProduct.js":
+/*!***************************************!*\
+  !*** ./client/store/singleProduct.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ singleProductReducer),
+/* harmony export */   "deleteProduct": () => (/* binding */ deleteProduct),
+/* harmony export */   "fetchSingleProduct": () => (/* binding */ fetchSingleProduct),
+/* harmony export */   "setSingleProduct": () => (/* binding */ setSingleProduct),
+/* harmony export */   "toDeleteProduct": () => (/* binding */ toDeleteProduct)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+ //Action types
+
+const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT';
+const DELETE_PRODUCT = 'DELETE_PRODUCT'; //Action creators
+
+const setSingleProduct = product => ({
+  type: SET_SINGLE_PRODUCT,
+  product
+});
+const deleteProduct = id => ({
+  type: DELETE_PRODUCT,
+  id
+}); //Thunk creators
+
+const fetchSingleProduct = id => async dispatch => {
+  const {
+    data
+  } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/product/${id}`);
+  dispatch(setSingleProduct(data));
+};
+const toDeleteProduct = (id, history) => async dispatch => {
+  await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/products/${id}`).then(() => dispatch(deleteProduct(id)));
+  history.push('/products');
+}; //Reducer
+
+function singleProductReducer(state = {}, action) {
+  switch (action.type) {
+    case SET_SINGLE_PRODUCT:
+      return action.product;
+
+    case DELETE_PRODUCT:
+      return { ...state
+      }.filter(productState => productState.id !== action.id);
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./client/store/singleUser.js":
+/*!************************************!*\
+  !*** ./client/store/singleUser.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ singleUserReducer),
+/* harmony export */   "fetchSingleUser": () => (/* binding */ fetchSingleUser),
+/* harmony export */   "setSingleUser": () => (/* binding */ setSingleUser)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+ //Action types
+
+const SET_SINGLE_USER = 'SET_SINGLE_USER'; //Action creators
+
+const setSingleUser = user => ({
+  type: SET_SINGLE_USER,
+  user
+}); //Thunk creators
+
+const fetchSingleUser = id => async dispatch => {
+  const {
+    data
+  } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(`/api/users/${id}`);
+  dispatch(setSingleUser(data));
+}; //Reducer
+
+function singleUserReducer(state = {}, action) {
+  switch (action.type) {
+    case SET_SINGLE_USER:
+      return action.user;
+
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
