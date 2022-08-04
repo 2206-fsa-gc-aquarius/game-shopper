@@ -2641,34 +2641,7 @@ const mapDispatch = dispatch => {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapState, mapDispatch)(SingleProduct)); // platform: {
-//   type: Sequelize.STRING,
-//   allowNull: false,
-// },
-// genre: {
-//   type: Sequelize.STRING,
-//   allowNull: false,
-// },
-// price: {
-//   type: Sequelize.INTEGER,
-//   allowNull: false,
-// },
-// image: {
-//   type: Sequelize.TEXT,
-//   defaultValue: './images/Game_placeholder.png',
-// },
-// esrb: {
-//   type: Sequelize.STRING,
-//   defaultValue: 'Not rated',
-// },
-// rating: {
-//   type: Sequelize.INTEGER,
-//   allowNull: false,
-// },
-// multiplayer: {
-//   type: Sequelize.STRING,
-//   allowNull: false,
-// },
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapState, mapDispatch)(SingleProduct));
 
 /***/ }),
 
