@@ -7,29 +7,65 @@ import { authenticate } from '../store';
  */
 const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
+  console.log(props);
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
-  );
+  //RENDER SIGNUP PAGE
+  if (displayName === 'Sign Up') {
+    return (
+      <div>
+        <form onSubmit={handleSubmit} name={name}>
+          <div>
+            <label htmlFor='username'>
+              <small>Username</small>
+            </label>
+            <input name='username' type='text' />
+          </div>
+          <div>
+            <label htmlFor='password'>
+              <small>Password</small>
+            </label>
+            <input name='password' type='password' />
+          </div>
+          <div>
+            <label htmlFor='email'>
+              <small>Email</small>
+            </label>
+            <input name='email' type='email' />
+          </div>
+
+          <div>
+            <button type='submit'>{displayName}</button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    );
+  }
+  //RENDER LOGIN PAGE
+  if (displayName === 'Login') {
+    return (
+      <div>
+        <form onSubmit={handleSubmit} name={name}>
+          <div>
+            <label htmlFor='username'>
+              <small>Username</small>
+            </label>
+            <input name='username' type='text' />
+          </div>
+          <div>
+            <label htmlFor='password'>
+              <small>Password</small>
+            </label>
+            <input name='password' type='password' />
+          </div>
+          <div>
+            <button type='submit'>{displayName}</button>
+          </div>
+          {error && error.response && <div> {error.response.data} </div>}
+        </form>
+      </div>
+    );
+  }
 };
 
 /**
@@ -62,8 +98,11 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name;
       const username = evt.target.username.value;
       const password = evt.target.password.value;
+      if (evt.target.email.value) {
+        const email = evt.target.email.value;
+      }
 
-      dispatch(authenticate(username, password, formName));
+      dispatch(authenticate(username, password, email, formName));
     },
   };
 };

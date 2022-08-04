@@ -23,25 +23,22 @@ const User = db.define('user', {
     validate: {
       isEmail: true,
     },
-
-    unique: true,
   },
   logged: {
     type: sequelize.BOOLEAN,
     defaultValue: false,
   },
-
-  //This is a test, trying enum for now
-  // admin: {
-  //   type: Sequelize.BOOLEAN,
-  //   defaultValue: false,
-  // },
   userType: {
     type: Sequelize.ENUM('User', 'Admin'),
     allowNull: true,
     defaultValue: 'User',
   },
 });
+//This is a test, trying enum for now
+// admin: {
+//   type: Sequelize.BOOLEAN,
+//   defaultValue: false,
+// },
 
 module.exports = User;
 

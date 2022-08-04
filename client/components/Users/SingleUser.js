@@ -16,9 +16,9 @@ class SingeUser extends React.Component {
         const {admin} = this.props.singleUser;
         return (
             <div>
-                <h1>{this.props.singleUser.username}</h1>
-                <br />
-                <h2>{admin}</h2>
+                <h1>User Name: <br/>{this.props.singleUser.username}</h1>
+                <h2>User Type: <br />{this.props.singleUser.userType}</h2>
+                <h2>Email: <br />{this.props.singleUser.email}</h2>
                 {console.log(this.props.singleUser)}
             </div>
         )
