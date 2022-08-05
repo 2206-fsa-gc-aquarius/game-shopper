@@ -13,25 +13,27 @@ class SignUp extends React.Component {
       <div>
         <form onSubmit={handleSubmit} name={name}>
           <div>
-            <label htmlFor='username'>
+            <label htmlFor="username">
               <small>Username</small>
             </label>
-            <input name='username' type='text' />
+            <input name="username" type="text" />
           </div>
           <div>
-            <label htmlFor='password'>
+            <label htmlFor="password">
               <small>Password</small>
             </label>
-            <input name='password' type='password' />
+            <input name="password" type="password" />
           </div>
           <div>
-            <label htmlFor='email'>
+            <label htmlFor="email">
               <small>Email</small>
             </label>
-            <input name='email' type='email' />
+            <input name="email" type="text" />
           </div>
           <div>
-            <button type='submit'>{displayName}</button>
+            <button type="submit" className="btn">
+              {displayName}
+            </button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
