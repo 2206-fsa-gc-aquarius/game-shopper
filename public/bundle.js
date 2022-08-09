@@ -2148,7 +2148,7 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       component: _components_Users_UserProfile__WEBPACK_IMPORTED_MODULE_10__["default"]
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
       exact: true,
-      path: "/products/:id",
+      path: "/products/:id/users/:userId",
       component: _components_singleProducts_SingleProduct__WEBPACK_IMPORTED_MODULE_4__["default"]
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
       exact: true,
@@ -2296,11 +2296,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const Home = props => {
   const {
-    username
+    user
   } = props;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
     className: "textColor"
-  }, "Welcome, ", username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_products_AllProducts__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  }, "Welcome, ", user.username)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_products_AllProducts__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    user: user
+  }));
 };
 /**
  * CONTAINER
@@ -2308,7 +2310,7 @@ const Home = props => {
 
 const mapState = state => {
   return {
-    username: state.auth.username
+    user: state.auth
   };
 };
 
@@ -2498,32 +2500,6 @@ const mapDispatch = dispatch => {
 
 /***/ }),
 
-/***/ "./client/components/NotFound.js":
-/*!***************************************!*\
-  !*** ./client/components/NotFound.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-
-const NotFound = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "404"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "This is not the page you are looking for"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-    className: "image404",
-    src: "https://i.etsystatic.com/20023820/r/il/b560a5/3911934672/il_570xN.3911934672_lhi3.jpg"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null));
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotFound);
-
-/***/ }),
-
 /***/ "./client/components/SignUp.js":
 /*!*************************************!*\
   !*** ./client/components/SignUp.js ***!
@@ -2679,6 +2655,49 @@ const mapDispatch = dispatch => ({
 
 /***/ }),
 
+/***/ "./client/components/Users/DeleteUser.js":
+/*!***********************************************!*\
+  !*** ./client/components/Users/DeleteUser.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_users__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/users */ "./client/store/users.js");
+
+
+
+
+const DeleteUser = props => {
+  const {
+    id
+  } = props.user;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: ev => ev.preventDefault()
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "button",
+    className: "remove",
+    onClick: () => props.deleteUser(id)
+  }, "Delete"));
+};
+
+const mapDispatchToProps = (dispatch, {
+  history
+}) => {
+  return {
+    deleteUser: id => dispatch((0,_store_users__WEBPACK_IMPORTED_MODULE_2__.toDeleteUser)(id, history))
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(null, mapDispatchToProps)(DeleteUser));
+
+/***/ }),
+
 /***/ "./client/components/Users/SingleUser.js":
 /*!***********************************************!*\
   !*** ./client/components/Users/SingleUser.js ***!
@@ -2693,6 +2712,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _store_singleUser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/singleUser */ "./client/store/singleUser.js");
+/* harmony import */ var _DeleteUser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteUser */ "./client/components/Users/DeleteUser.js");
+
 
 
 
@@ -2711,7 +2732,9 @@ class SingeUser extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     const {
       admin
     } = this.props.singleUser;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Name: ", this.props.singleUser.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "User Type: ", this.props.singleUser.userType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, this.props.singleUser.email), console.log(this.props.singleUser));
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "Name: ", this.props.singleUser.username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "User Type: ", this.props.singleUser.userType), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, this.props.singleUser.email), console.log(this.props.singleUser), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_DeleteUser__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      user: this.props.singleUser
+    }));
   }
 
 }
@@ -2721,7 +2744,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  fetchSingleUser: id => dispatch((0,_store_singleUser__WEBPACK_IMPORTED_MODULE_2__.fetchSingleUser)(id))
+  fetchSingleUser: id => dispatch((0,_store_singleUser__WEBPACK_IMPORTED_MODULE_2__.fetchSingleUser)(id, history))
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_1__.connect)(mapState, mapDispatch)(SingeUser));
@@ -2853,6 +2876,8 @@ class AllProducts extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   }
 
   render(error) {
+    console.log('this is allproductporps', this.props);
+
     if (error) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
         className: "textColor"
@@ -2865,7 +2890,8 @@ class AllProducts extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         className: "list"
       }, this.props.products.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Check out these awesome games"), this.props.products.map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ListProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
         products: product,
-        key: product.id
+        key: product.id,
+        user: this.props.user
       }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
         className: "textColor"
       }, "there are no games to display currently")));
@@ -2909,10 +2935,12 @@ __webpack_require__.r(__webpack_exports__);
 class ListProduct extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   render() {
     const {
-      products
+      products,
+      user
     } = this.props;
+    console.log('herrreee listproduct', this.props);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-      to: `/products/${products.id}`
+      to: `/products/${products.id}/users/${user.id}`
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       src: products.image
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
@@ -2937,55 +2965,9 @@ class ListProduct extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 /*!***********************************************************!*\
   !*** ./client/components/singleProducts/SingleProduct.js ***!
   \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _store_singleProduct__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/singleProduct */ "./client/store/singleProduct.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _NotFound__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../NotFound */ "./client/components/NotFound.js");
-
-
-
-
-
-class SingleProduct extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
-  componentDidMount() {
-    this.props.fetchSingleProduct(this.props.match.params.id);
-    console.log("this is this.props", this.props);
-  }
-
-  render() {
-    const product = this.props.singleProduct;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "textColor"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
-      src: product.image
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-      className: "addToCartBtn",
-      type: "submit"
-    }, "Add To Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "$", product.price / 100), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Platform:"), " ", product.platform, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Description:"), " ", product.description, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "ESRB:"), " ", product.esrb, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), product.multiplayer === "Yes" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Supports multiplayer") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Does not support multiplayer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Metacritic Rating:"), " ", product.rating, "/100", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotFound__WEBPACK_IMPORTED_MODULE_3__["default"], null));
-  }
-
-}
-
-const mapState = state => {
-  return {
-    singleProduct: state.singleProductReducer
-  };
-};
-
-const mapDispatch = dispatch => {
-  return {
-    fetchSingleProduct: id => dispatch((0,_store_singleProduct__WEBPACK_IMPORTED_MODULE_1__.fetchSingleProduct)(id))
-  };
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapState, mapDispatch)(SingleProduct));
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/alex/FSA-Week-8/game-shopper/client/components/singleProducts/SingleProduct.js: Unexpected token (1:1)\n\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 |\u001b[39m \u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m   |\u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 2 |\u001b[39m \u001b[36mimport\u001b[39m \u001b[33mReact\u001b[39m \u001b[36mfrom\u001b[39m \u001b[32m\"react\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 3 |\u001b[39m \u001b[36mimport\u001b[39m { fetchSingleProduct } \u001b[36mfrom\u001b[39m \u001b[32m\"../../store/singleProduct\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 4 |\u001b[39m \u001b[36mimport\u001b[39m { connect } \u001b[36mfrom\u001b[39m \u001b[32m\"react-redux\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n    at instantiate (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:72:32)\n    at constructor (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:366:12)\n    at Object.raise (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:3453:19)\n    at Object.unexpected (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:3491:16)\n    at Object.jsxParseIdentifier (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:7918:12)\n    at Object.jsxParseNamespacedName (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:7928:23)\n    at Object.jsxParseElementName (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:7939:21)\n    at Object.jsxParseOpeningElementAt (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:8038:22)\n    at Object.jsxParseElementAt (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:8070:33)\n    at Object.jsxParseElement (/Users/alex/FSA-Week-8/game-shopper/node_modules/@babel/parser/lib/index.js:8155:17)");
 
 /***/ }),
 
@@ -3554,8 +3536,12 @@ const toAddUser = (userList, history) => async dispatch => {
   history.push('/users');
 };
 const toDeleteUser = (id, history) => async dispatch => {
-  await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/users/${id}`).then(() => dispatch(deleteUser(id)));
-  history.push('/users');
+  try {
+    await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/users/${id}`).then(() => dispatch(deleteUser(id)));
+    history.push('/users');
+  } catch (err) {
+    console.log('error deleting user', err);
+  }
 }; //Reducer
 
 function userListReducer(state = [], action) {
