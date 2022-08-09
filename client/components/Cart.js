@@ -1,17 +1,17 @@
-import React from 'react';
-import { fetchCart } from '../store/cart';
-import { connect } from 'react-redux';
+import React from "react";
+import { fetchCart, deleteCartItem } from "../store/cart";
+import { connect } from "react-redux";
 
 export class DisplayCart extends React.Component {
   componentDidMount() {
     this.props.fetchCart(this.props.match.params.id);
-    //console.log('this is this.props', this.props);
+    //console.log('this is this.props', this.props)
   }
 
   render() {
     const userCart = this.props.cart;
 
-    console.log('heeerrree----', userCart);
+    console.log("heeerrree----", this.props);
     return (
       <div className="textColor">
         <div id="products" className="list">
@@ -20,8 +20,29 @@ export class DisplayCart extends React.Component {
               <h2>Your Cart is:</h2>
               {userCart.map((product) => (
                 <div key={product.id}>
+                  <div>{product.name}</div>
+                  <div>
+                    Quantity:{" "}
+                    {product.order_product.quantity &&
+                      product.order_product.quantity}
+                  </div>
                   <img className="" src={product.image} />
-                  {product.name}
+                  {console.log(product)}
+                  <form onSubmit={(event) => event.preventDefault()}>
+                    <button
+                      type="submit"
+                      className="remove"
+                      onClick={() =>
+                        this.props.deleteCartItem(
+                          product.order_product.orderId,
+                          product.order_product.productId
+                        )
+                      }
+                    >
+                      Delete
+                    </button>
+                  </form>
+                  <br />
                 </div>
               ))}
             </div>
@@ -40,9 +61,11 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     fetchCart: (id) => dispatch(fetchCart(id)),
+    deleteCartItem: (orderId, productId) =>
+      dispatch(deleteCartItem(orderId, productId, history)),
   };
 };
 

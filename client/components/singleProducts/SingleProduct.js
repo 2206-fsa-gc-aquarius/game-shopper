@@ -1,12 +1,12 @@
-import React from 'react';
-import { fetchSingleProduct } from '../../store/singleProduct';
-import { connect } from 'react-redux';
-import NotFound from '../NotFound';
+import React from "react";
+import { fetchSingleProduct } from "../../store/singleProduct";
+import { connect } from "react-redux";
+import NotFound from "../NotFound";
 
 class SingleProduct extends React.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.id);
-    console.log('this is this.props', this.props);
+    console.log("this is this.props", this.props);
   }
 
   render() {
@@ -31,7 +31,7 @@ class SingleProduct extends React.Component {
             <br />
             <b>ESRB:</b> {product.esrb} <br />
             <br />
-            {product.multiplayer ? (
+            {product.multiplayer === "Yes" ? (
               <b>Supports multiplayer</b>
             ) : (
               <b>Does not support multiplayer</b>

@@ -2224,12 +2224,12 @@ __webpack_require__.r(__webpack_exports__);
 
 class DisplayCart extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   componentDidMount() {
-    this.props.fetchCart(this.props.match.params.id); //console.log('this is this.props', this.props);
+    this.props.fetchCart(this.props.match.params.id); //console.log('this is this.props', this.props)
   }
 
   render() {
     const userCart = this.props.cart;
-    console.log('heeerrree----', userCart);
+    console.log("heeerrree----", this.props);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "textColor"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2237,10 +2237,16 @@ class DisplayCart extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "list"
     }, userCart.length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Your Cart is:"), userCart.map(product => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: product.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, product.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Quantity:", " ", product.order_product.quantity && product.order_product.quantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       className: "",
       src: product.image
-    }), product.name))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
+    }), console.log(product), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+      onSubmit: event => event.preventDefault()
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "submit",
+      className: "remove",
+      onClick: () => this.props.deleteCartItem(product.order_product.orderId, product.order_product.productId)
+    }, "Delete")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "textColor"
     }, "Your Cart is empty")));
   }
@@ -2253,9 +2259,12 @@ const mapState = state => {
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, {
+  history
+}) => {
   return {
-    fetchCart: id => dispatch((0,_store_cart__WEBPACK_IMPORTED_MODULE_1__.fetchCart)(id))
+    fetchCart: id => dispatch((0,_store_cart__WEBPACK_IMPORTED_MODULE_1__.fetchCart)(id)),
+    deleteCartItem: (orderId, productId) => dispatch((0,_store_cart__WEBPACK_IMPORTED_MODULE_1__.deleteCartItem)(orderId, productId, history))
   };
 };
 
@@ -2947,7 +2956,7 @@ __webpack_require__.r(__webpack_exports__);
 class SingleProduct extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.id);
-    console.log('this is this.props', this.props);
+    console.log("this is this.props", this.props);
   }
 
   render() {
@@ -2959,7 +2968,7 @@ class SingleProduct extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
       className: "addToCartBtn",
       type: "submit"
-    }, "Add To Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "$", product.price / 100), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Platform:"), " ", product.platform, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Description:"), " ", product.description, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "ESRB:"), " ", product.esrb, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), product.multiplayer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Supports multiplayer") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Does not support multiplayer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Metacritic Rating:"), " ", product.rating, "/100", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotFound__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+    }, "Add To Cart"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "$", product.price / 100), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Platform:"), " ", product.platform, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Description:"), " ", product.description, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "ESRB:"), " ", product.esrb, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), product.multiplayer === "Yes" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Supports multiplayer") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Does not support multiplayer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("b", null, "Metacritic Rating:"), " ", product.rating, "/100", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotFound__WEBPACK_IMPORTED_MODULE_3__["default"], null));
   }
 
 }
@@ -3096,6 +3105,8 @@ const logout = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addCartItem": () => (/* binding */ addCartItem),
+/* harmony export */   "addCartProduct": () => (/* binding */ addCartProduct),
 /* harmony export */   "default": () => (/* binding */ cartReducer),
 /* harmony export */   "deleteCartItem": () => (/* binding */ deleteCartItem),
 /* harmony export */   "deleteCartProduct": () => (/* binding */ deleteCartProduct),
@@ -3106,8 +3117,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
  // action type
 
-const DELETE_PRODUCT = 'DELETE_PRODUCT';
-const GET_CART = 'GET_CART'; // action creator(s)
+const DELETE_PRODUCT = "DELETE_PRODUCT";
+const GET_CART = "GET_CART";
+const ADD_CART_PRODUCT = "ADD_CART_PRODUCT"; // action creator(s)
 
 const deleteCartProduct = product => ({
   type: DELETE_PRODUCT,
@@ -3118,17 +3130,34 @@ const getCart = cart => {
     type: GET_CART,
     cart
   };
-}; // thunks
+};
+const addCartProduct = product => ({
+  type: ADD_CART_PRODUCT,
+  product
+}); // thunks
 
-const deleteCartItem = (productId, history) => {
+const deleteCartItem = (orderId, productId, history) => {
   return async dispatch => {
     try {
       const {
         data: cartItem
-      } = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/cart/${productId}`);
+      } = await axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"](`/api/cart/${orderId}/${productId}`);
       dispatch(deleteCartProduct(cartItem));
+      history.push(`/users/cart/${orderId}`);
     } catch (err) {
-      console.log('error deleting item from cart', err);
+      console.log("error deleting item from cart", err);
+    }
+  };
+};
+const addCartItem = order => {
+  return async dispatch => {
+    try {
+      const {
+        data: cartItem
+      } = await axios__WEBPACK_IMPORTED_MODULE_0___default().put(`/api/cart/${order.userId}`, order);
+      dispatch(addCartProduct(cartItem));
+    } catch (err) {
+      console.log("error adding item from cart", err);
     }
   };
 };
@@ -3142,12 +3171,13 @@ const fetchCart = id => async dispatch => {
 function cartReducer(state = [], action) {
   switch (action.type) {
     case DELETE_PRODUCT:
-      return state.filter(cartProduct => {
-        return cartProduct.id !== action.product.id;
-      });
+      return action.product.products;
 
     case GET_CART:
       return action.cart;
+
+    case ADD_CART_PRODUCT:
+      return [...state, action.product];
 
     default:
       return state;
